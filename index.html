@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#FBF8F3">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>ТУМАН — Образовательная этно-платформа с ИИ-собеседником</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Unbounded -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Unbounded:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        beige: {
+                            50: '#FDFCF7',
+                            100: '#FBF8F3',
+                            200: '#F4EFE6',
+                            300: '#E9DFC9',
+                            400: '#D5C4A1',
+                            700: '#7D6A53',
+                            900: '#221D1A'
+                        },
+                        tuman: {
+                            terracotta: '#D95338',
+                            forest: '#2D5A46',
+                            gold: '#D97706',
+                            sky: '#0284C7'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                        display: ['Unbounded', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+        .leaves-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .cream-card {
+            background: rgba(255, 255, 255, 0.88);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(220, 205, 185, 0.45);
+            box-shadow: 0 10px 30px -10px rgba(120, 95, 75, 0.08);
+        }
+        .cream-nav {
+            background: rgba(251, 248, 243, 0.92);
+            -webkit-backdrop-filter: blur(18px);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(217, 195, 170, 0.45);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FBF8F3;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D9CFC1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-beige-100 text-beige-900 font-sans antialiased overflow-x-hidden selection:bg-tuman-terracotta/20 selection:text-beige-900">
+
+<!-- ФОНОВЫЙ КАНВАС С ЛЕСНЫМИ ЛИСТОЧКАМИ -->
+<canvas id="leaves-canvas" class="leaves-canvas"></canvas>
+
+<!-- НАВИГАЦИЯ -->
+<header class="fixed top-0 left-0 right-0 z-50 cream-nav">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-tuman-terracotta to-amber-400 p-0.5 flex items-center justify-center shadow-md shadow-tuman-terracotta/20 shrink-0">
+                <div class="w-full h-full bg-beige-50 rounded-[14px] flex items-center justify-center overflow-hidden p-0.5">
+                    <img src="туманвизитка.jpg" alt="Туман" onerror="this.outerHTML='<span class=\'text-xl\'>🦉</span>'" class="w-full h-full object-cover rounded-lg">
+                </div>
+            </div>
+            <div>
+                <span class="font-display font-bold tracking-wider text-xl text-beige-900">ТУМАН</span>
+                <span class="hidden sm:inline-block ml-2 px-2.5 py-0.5 text-[10px] font-semibold tracking-wide bg-tuman-forest/10 text-tuman-forest rounded-full border border-tuman-forest/20">ИИ-ЭТНОПЛАТФОРМА</span>
+            </div>
+        </div>
+
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-beige-700">
+            <a href="#stats" class="hover:text-tuman-terracotta transition-colors">Проблема</a>
+            <a href="#ai-advantage" class="hover:text-tuman-terracotta transition-colors">ИИ-собеседник</a>
+            <a href="#mascots" class="hover:text-tuman-terracotta transition-colors">Этно-хранители</a>
+            <a href="#methodology" class="hover:text-tuman-terracotta transition-colors">Методология</a>
+            <a href="#simulator" class="hover:text-tuman-terracotta transition-colors">Демо урока & ИИ</a>
+            <a href="#future" class="hover:text-tuman-terracotta transition-colors">Будущее</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+            <a href="#simulator" class="px-5 py-2.5 rounded-xl bg-tuman-forest text-white font-medium text-sm hover:shadow-lg hover:shadow-tuman-forest/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2">
+                <i data-lucide="bot" class="w-4 h-4"></i>
+                Диалог с Туманом
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- HERO SECTION -->
+<section class="relative pt-36 pb-20 md:pt-44 md:pb-28 overflow-hidden z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
+
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/70 border border-beige-300 text-xs font-medium text-tuman-forest shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-tuman-forest animate-ping"></span>
+                    Пилотный запуск • Сохранение редких языков народов России
+                </div>
+                <h1 class="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-beige-900 tracking-tight leading-[1.18]">
+                    Интерактивное сохранение <br>
+                    <span class="bg-gradient-to-r from-tuman-terracotta via-amber-700 to-tuman-forest bg-clip-text text-transparent">редких языков с ИИ-помощником</span>
+                </h1>
+                <p class="text-base sm:text-lg text-beige-700 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
+                    Первая образовательная этно-платформа, решающая ключевую проблему: нехватку живых носителей для разговорной практики. Общайтесь на редких языках с умным нейропомощником Совёнком Туманом в любое время и в комфортном темпе!
+                </p>
+
+                <div class="pt-2 flex flex-wrap gap-4 justify-center lg:justify-start">
+                    <a href="#simulator" class="px-7 py-3.5 rounded-2xl bg-tuman-terracotta text-white font-semibold text-base shadow-xl shadow-tuman-terracotta/25 hover:bg-tuman-terracotta/90 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-3">
+                        <i data-lucide="message-square" class="w-5 h-5"></i>
+                        Попробовать чат с ИИ
+                    </a>
+                    <a href="#mascots" class="px-7 py-3.5 rounded-2xl bg-white/80 border border-beige-300 text-beige-900 font-semibold text-base hover:bg-white transition-all shadow-sm flex items-center gap-2">
+                        Этно-хранители регионов
+                    </a>
+                </div>
+
+                <div class="pt-8 border-t border-beige-300/80 grid grid-cols-3 gap-4 max-w-lg mx-auto lg:mx-0">
+                    <div>
+                        <div class="font-display font-bold text-2xl sm:text-3xl text-tuman-terracotta">10+</div>
+                        <div class="text-xs text-beige-700 mt-1 font-medium">Маскотов регионов</div>
+                    </div>
+                    <div>
+                        <div class="font-display font-bold text-2xl sm:text-3xl text-tuman-forest">24/7</div>
+                        <div class="text-xs text-beige-700 mt-1 font-medium">ИИ-собеседник в чате</div>
+                    </div>
+                    <div>
+                        <div class="font-display font-bold text-2xl sm:text-3xl text-amber-600">100%</div>
+                        <div class="text-xs text-beige-700 mt-1 font-medium">Озвучка носителями</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка Совёнка Тумана -->
+            <div class="lg:col-span-5 flex justify-center">
+                <div class="relative w-full max-w-md">
+                    <div class="absolute -inset-3 bg-gradient-to-r from-tuman-terracotta/15 to-amber-300/20 rounded-3xl blur-xl opacity-70"></div>
+                    <div class="cream-card relative rounded-3xl p-6 sm:p-7 text-center border border-beige-300/80">
+
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-tuman-forest/10 border border-tuman-forest/20 text-tuman-forest text-xs font-semibold mb-3">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                            Персональный ИИ-нейропомощник
+                        </div>
+
+                        <div class="w-full aspect-[4/3] rounded-2xl overflow-hidden relative mb-4 border border-beige-300 shadow-md bg-beige-200">
+                            <img src="туманвизитка.jpg" alt="Совёнок Туман" onerror="this.outerHTML='<div class=\'w-full h-full flex items-center justify-center text-7xl\'>🦉</div>'" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                            <div class="absolute bottom-2 right-2 bg-tuman-terracotta text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>
+                                ИИ Онлайн
+                            </div>
+                        </div>
+
+                        <h3 class="font-display font-bold text-2xl text-beige-900">Совёнок Туман</h3>
+                        <p class="text-sm text-beige-700 mt-2 font-normal">
+                            «Я помогу тебе освоить живой диалог, отвечу на сложные вопросы грамматики и поддержу разговор на редких языках народов России!»
+                        </p>
+
+                        <div class="mt-5 p-3 rounded-2xl bg-beige-200/60 border border-beige-300/60 flex items-center justify-between text-xs">
+                            <span class="text-beige-700">Особенность:</span>
+                            <span class="text-tuman-forest font-semibold">ИИ адаптируется под ваш темп</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- СЕКЦИЯ: ИИ-СОБЕСЕДНИК -->
+<section id="ai-advantage" class="py-20 relative z-10 bg-white/70 border-y border-beige-300/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
+
+            <div class="lg:col-span-6 space-y-6">
+                    <span class="text-xs uppercase tracking-widest font-semibold text-tuman-forest bg-tuman-forest/10 px-3.5 py-1.5 rounded-full border border-tuman-forest/20">
+                        Главное отличие платформы
+                    </span>
+                <h2 class="font-display font-bold text-3xl sm:text-4xl text-beige-900 leading-tight">
+                    Найти живого носителя трудно. <br>
+                    <span class="text-tuman-terracotta">ИИ-собеседник решит эту проблему.</span>
+                </h2>
+                <p class="text-beige-700 text-base leading-relaxed font-normal">
+                    В большинстве редких языков носителями остались лишь представители старшего поколения, проживающие в отдалённых уголках страны. Найти человека, готового регулярно общаться с начинающим учеником, крайне сложно.
+                </p>
+                <p class="text-beige-700 text-base leading-relaxed font-normal">
+                    Ни одно существующее приложение на российском рынке не предлагает разговорной практики с искусственным интеллектом для языков народов РФ. <b>«ТУМАН» — первое решение со встроенной языковой моделью</b>, обученной тонкостям грамматики и культурного этикета.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div class="p-4 rounded-2xl bg-beige-100 border border-beige-300/80">
+                        <div class="text-tuman-terracotta font-bold text-sm flex items-center gap-2 mb-1">
+                            <i data-lucide="check-circle-2" class="w-4 h-4"></i> Непрерывная практика
+                        </div>
+                        <p class="text-xs text-beige-700">Общайтесь текстом и голосом в любое удобное время без страха сделать ошибку.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-beige-100 border border-beige-300/80">
+                        <div class="text-tuman-forest font-bold text-sm flex items-center gap-2 mb-1">
+                            <i data-lucide="brain-circuit" class="w-4 h-4"></i> Дополнительные задания
+                        </div>
+                        <p class="text-xs text-beige-700">ИИ анализирует диалог и сам формирует упражнения по темам, вызвавшим трудности.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Сравнение подходов -->
+            <div class="lg:col-span-6">
+                <div class="cream-card p-6 sm:p-8 rounded-3xl border border-beige-300 shadow-lg space-y-6">
+                    <h3 class="font-display font-bold text-xl text-beige-900">
+                        Сравнение подходов на рынке РФ
+                    </h3>
+
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200">
+                            <div class="flex items-center justify-between text-xs font-bold text-rose-900 mb-1">
+                                <span>ДРУГИЕ ПРИЛОЖЕНИЯ И СЛОВАРИ</span>
+                                <span class="text-rose-600 font-mono">Ограниченно</span>
+                            </div>
+                            <ul class="text-xs text-rose-800 space-y-1 mt-2">
+                                <li>• Заучивание отдельных списков слов без контекста живой речи</li>
+                                <li>• Невозможность вести полноценный интерактивный диалог</li>
+                                <li>• Тяжело найти носителя языка для частой практики</li>
+                            </ul>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-300 shadow-sm">
+                            <div class="flex items-center justify-between text-xs font-bold text-emerald-950 mb-1">
+                                    <span class="flex items-center gap-1.5">
+                                        <i data-lucide="sparkles" class="w-4 h-4 text-tuman-forest"></i>
+                                        ПЛАТФОРМА «ТУМАН» С НЕЙРОСЕТЬЮ
+                                    </span>
+                                <span class="text-emerald-700 font-bold">Инновация РФ</span>
+                            </div>
+                            <ul class="text-xs text-emerald-900 space-y-1.5 mt-2">
+                                <li>✓ <b>Умный ИИ-собеседник</b> на бурятском, башкирском, татарском и других языках</li>
+                                <li>✓ <b>Мгновенные подсказки Тумана:</b> исправление окончаний и объяснение этимологии</li>
+                                <li>✓ <b>Бесплатный доступ</b> ко всем ключевым инструментам живого диалога</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-beige-100 rounded-xl text-xs text-beige-700 text-center font-medium">
+                        «Единственный способ сохранить язык — начать на нём говорить»
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- СЕКЦИЯ: АКТУАЛЬНОСТЬ ПРОБЛЕМЫ -->
+<section id="stats" class="py-20 relative z-10 bg-beige-200/50 border-y border-beige-300/70">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs uppercase tracking-widest font-semibold text-tuman-terracotta bg-tuman-terracotta/10 px-3.5 py-1.5 rounded-full border border-tuman-terracotta/20">
+                    Актуальность проблемы
+                </span>
+            <h2 class="font-display font-bold text-3xl sm:text-4xl text-beige-900 mt-4">
+                Языки коренных народов под угрозой исчезновения
+            </h2>
+            <p class="text-beige-700 text-sm sm:text-base mt-3 font-normal">
+                По данным ЮНЕСКО и Всероссийской переписи, классические форматы уступают смартфонам, а разрыв между поколениями продолжает расти.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="cream-card p-6 rounded-2xl border-l-4 border-l-tuman-forest">
+                <div class="text-4xl font-display font-extrabold text-beige-900">150+</div>
+                <div class="text-sm font-bold text-beige-900 mt-2">Языков и диалектов в РФ</div>
+                <p class="text-xs text-beige-700 mt-2 leading-relaxed">Уникальное культурное и языковое разнообразие страны.</p>
+            </div>
+
+            <div class="cream-card p-6 rounded-2xl border-l-4 border-l-amber-500">
+                <div class="text-4xl font-display font-extrabold text-amber-700">≈40</div>
+                <div class="text-sm font-bold text-beige-900 mt-2">В Красной книге ЮНЕСКО</div>
+                <p class="text-xs text-beige-700 mt-2 leading-relaxed">Языки в уязвимом положении, требующие немедленной защиты.</p>
+            </div>
+
+            <div class="cream-card p-6 rounded-2xl border-l-4 border-l-tuman-terracotta">
+                <div class="text-4xl font-display font-extrabold text-tuman-terracotta">≈25</div>
+                <div class="text-sm font-bold text-beige-900 mt-2">Под критической угрозой</div>
+                <p class="text-xs text-beige-700 mt-2 leading-relaxed">Количество говорящих стремительно уменьшается с каждым годом.</p>
+            </div>
+
+            <div class="cream-card p-6 rounded-2xl border-l-4 border-l-stone-600">
+                <div class="text-4xl font-display font-extrabold text-stone-700">70%+</div>
+                <div class="text-sm font-bold text-beige-900 mt-2">Носители только старшие</div>
+                <p class="text-xs text-beige-700 mt-2 leading-relaxed">Молодёжь редко использует язык предков в ежедневном общении.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- СЕКЦИЯ: ЭТНО-ХРАНИТЕЛИ И ВИЗИТКИ ГЕРОЕВ -->
+<section id="mascots" class="py-24 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs uppercase tracking-widest font-semibold text-tuman-forest bg-tuman-forest/10 px-3.5 py-1.5 rounded-full border border-tuman-forest/20">
+                    Этно-хранители регионов
+                </span>
+            <h2 class="font-display font-bold text-3xl sm:text-5xl text-beige-900 mt-4">
+                Маскоты с национальной айдентикой
+            </h2>
+            <p class="text-beige-700 text-sm sm:text-base mt-3 font-normal">
+                В каждом регионе вас встречает тотемный проводник в традиционном костюме. Нажмите на карточку, чтобы услышать и прочесть приветствие!
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7" id="mascots-grid"></div>
+    </div>
+</section>
+
+<!-- СЕКЦИЯ: МЕТОДОЛОГИЯ ОБУЧЕНИЯ -->
+<section id="methodology" class="py-20 relative z-10 bg-beige-200/50 border-y border-beige-300/70">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs uppercase tracking-widest font-semibold text-amber-700 bg-amber-500/10 px-3.5 py-1.5 rounded-full border border-amber-600/20">
+                    Образовательный процесс
+                </span>
+            <h2 class="font-display font-bold text-3xl sm:text-4xl text-beige-900 mt-4">
+                Как это работает: путь пользователя
+            </h2>
+            <p class="text-beige-700 text-sm sm:text-base mt-2 font-normal">
+                Последовательная система освоения родной речи — от знакомства с культурой до уверенного диалога.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="cream-card p-6 rounded-3xl border border-beige-300 hover:border-tuman-forest/50 transition-all">
+                <div class="w-10 h-10 rounded-xl bg-tuman-forest/10 text-tuman-forest flex items-center justify-center font-display font-bold mb-4">
+                    1
+                </div>
+                <h3 class="font-display font-bold text-lg text-beige-900">Выбор языка и региона</h3>
+                <p class="text-xs text-beige-700 mt-2 font-normal leading-relaxed">
+                    Пользователь открывает карту РФ и выбирает интересующий народ и диалект.
+                </p>
+            </div>
+
+            <div class="cream-card p-6 rounded-3xl border border-beige-300 hover:border-tuman-forest/50 transition-all">
+                <div class="w-10 h-10 rounded-xl bg-amber-600/10 text-amber-700 flex items-center justify-center font-display font-bold mb-4">
+                    2
+                </div>
+                <h3 class="font-display font-bold text-lg text-beige-900">Встреча с маскотом</h3>
+                <p class="text-xs text-beige-700 mt-2 font-normal leading-relaxed">
+                    Появляется Туман и этно-проводник региона с приветствием на родном языке.
+                </p>
+            </div>
+
+            <div class="cream-card p-6 rounded-3xl border border-beige-300 hover:border-tuman-forest/50 transition-all">
+                <div class="w-10 h-10 rounded-xl bg-tuman-terracotta/10 text-tuman-terracotta flex items-center justify-center font-display font-bold mb-4">
+                    3
+                </div>
+                <h3 class="font-display font-bold text-lg text-beige-900">Практические уроки</h3>
+                <p class="text-xs text-beige-700 mt-2 font-normal leading-relaxed">
+                    Короткие блоки по 5–10 минут: карточки, аудирование, живые фразы и тесты.
+                </p>
+            </div>
+
+            <div class="cream-card p-6 rounded-3xl border border-beige-300 hover:border-tuman-forest/50 transition-all">
+                <div class="w-10 h-10 rounded-xl bg-stone-500/10 text-stone-700 flex items-center justify-center font-display font-bold mb-4">
+                    4
+                </div>
+                <h3 class="font-display font-bold text-lg text-beige-900">ИИ-диалог и контекст</h3>
+                <p class="text-xs text-beige-700 mt-2 font-normal leading-relaxed">
+                    Обычаи, сказки и закрепление навыков в живом чате с ИИ-Туманом.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- СЕКЦИЯ: СИМУЛЯТОР УРОКА И ИИ-ЧАТА -->
+<section id="simulator" class="py-24 relative z-10">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs uppercase tracking-widest font-semibold text-tuman-forest bg-tuman-forest/10 px-3.5 py-1.5 rounded-full border border-tuman-forest/20">
+                    Интерактивное демо
+                </span>
+            <h2 class="font-display font-bold text-3xl sm:text-4xl text-beige-900 mt-3">
+                Протестируйте урок и чат с ИИ
+            </h2>
+            <p class="text-beige-700 text-sm mt-2 font-normal">
+                Переключайтесь между базовым тестом и живым диалогом с нейропомощником Совёнком Туманом!
+            </p>
+        </div>
+
+        <!-- Корпус смартфона -->
+        <div class="max-w-sm mx-auto bg-white rounded-[44px] p-4 border-4 border-beige-300 shadow-2xl shadow-stone-400/20 relative">
+            <div class="w-28 h-4 bg-beige-200 rounded-full mx-auto mb-3 flex items-center justify-center">
+                <div class="w-2.5 h-2.5 rounded-full bg-beige-300 mr-2"></div>
+                <div class="w-10 h-1 bg-beige-300 rounded-full"></div>
+            </div>
+
+            <!-- Вкладки переключения -->
+            <div class="flex items-center gap-1.5 p-1 bg-beige-200 rounded-2xl mb-3 text-xs font-semibold">
+                <button id="tab-btn-lesson" class="flex-1 py-1.5 rounded-xl bg-white text-beige-900 shadow-sm transition-all flex items-center justify-center gap-1">
+                    <i data-lucide="book" class="w-3.5 h-3.5"></i>
+                    Мини-урок
+                </button>
+                <button id="tab-btn-ai" class="flex-1 py-1.5 rounded-xl text-beige-700 hover:text-beige-900 transition-all flex items-center justify-center gap-1">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-tuman-terracotta"></i>
+                    Чат с ИИ-Туманом
+                </button>
+            </div>
+
+            <!-- Экран телефона -->
+            <div class="bg-beige-50 rounded-[30px] p-4 text-beige-900 min-h-[520px] flex flex-col justify-between border border-beige-200 relative overflow-hidden" id="phone-screen">
+
+                <!-- ВКЛАДКА 1: МИНИ-УРОК -->
+                <div id="view-lesson" class="flex flex-col justify-between h-full">
+                    <div>
+                        <div class="flex items-center justify-between text-xs text-beige-700 mb-2">
+                            <span class="bg-white px-2 py-0.5 rounded-full text-[10px] text-tuman-forest font-semibold border border-beige-300">Бурятский язык</span>
+                            <span class="text-beige-700 text-[10px]">Модуль 1</span>
+                        </div>
+
+                        <div class="w-full bg-beige-200 h-1.5 rounded-full overflow-hidden mb-4">
+                            <div id="lesson-progress" class="bg-tuman-forest h-full w-1/3 transition-all duration-500"></div>
+                        </div>
+
+                        <div class="p-3 rounded-2xl bg-white border border-beige-300 mb-3 flex items-center gap-2.5 shadow-sm">
+                            <div class="w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-beige-300">
+                                <img src="амарханвизитка.jpg" alt="Амархан" onerror="this.outerHTML='<span class=\'text-xl\'>🦭</span>'" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-tuman-forest font-semibold">Амархан говорит:</div>
+                                <div class="text-xs font-bold text-beige-900 tracking-wide">«Мэндэ! Бии Амархан.»</div>
+                            </div>
+                        </div>
+
+                        <h4 class="font-display font-bold text-xs text-beige-900 mb-3" id="quiz-question">
+                            Как Совёнку Туману правильно ответить на приветствие Амархана?
+                        </h4>
+
+                        <div class="grid grid-cols-1 gap-2" id="quiz-options"></div>
+                    </div>
+
+                    <div class="pt-3 border-t border-beige-200 mt-2">
+                        <div id="quiz-feedback" class="text-[11px] mb-2 hidden p-2 rounded-xl font-medium"></div>
+
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-7 h-7 rounded-full bg-beige-200 flex items-center justify-center overflow-hidden shrink-0 border border-beige-300">
+                                    <img src="туманвизитка.jpg" alt="Туман" onerror="this.outerHTML='<span class=\'text-xs\'>🦉</span>'" class="w-full h-full object-cover">
+                                </div>
+                                <span class="text-[10px] text-beige-700 leading-tight">Туман готов</span>
+                            </div>
+                            <button id="quiz-check-btn" disabled class="px-4 py-2 rounded-xl bg-beige-300 text-beige-700 text-xs font-bold transition-all">
+                                Проверить
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ВКЛАДКА 2: ИИ-СОБЕСЕДНИК (ЖИВОЙ ЧАТ) -->
+                <div id="view-ai" class="hidden flex flex-col justify-between h-full">
+                    <div>
+                        <div class="flex items-center justify-between pb-2.5 border-b border-beige-200 mb-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-full overflow-hidden border border-tuman-forest/40">
+                                    <img src="туманвизитка.jpg" alt="Туман" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-beige-900 flex items-center gap-1">
+                                        ИИ-Туман <i data-lucide="sparkles" class="w-3 h-3 text-tuman-terracotta"></i>
+                                    </div>
+                                    <div class="text-[10px] text-tuman-forest flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> готов к диалогу
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="text-[10px] px-2 py-0.5 rounded-md bg-beige-200 text-beige-700 font-mono">Бурятский</span>
+                        </div>
+
+                        <div class="space-y-2.5 max-h-[300px] overflow-y-auto pr-1" id="chat-messages">
+                            <div class="flex items-start gap-2">
+                                <div class="w-6 h-6 rounded-full overflow-hidden shrink-0 mt-0.5 border border-beige-300">
+                                    <img src="туманвизитка.jpg" alt="Туман" class="w-full h-full object-cover">
+                                </div>
+                                <div class="p-2.5 rounded-2xl rounded-tl-sm bg-white border border-beige-300 text-[11px] text-beige-900 shadow-sm leading-relaxed">
+                                    Мэндэ! Я твой ИИ-собеседник Совёнок Туман. Напиши мне реплику или выбери готовую кнопку ниже, чтобы потренироваться!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 border-t border-beige-200 mt-2">
+                        <div class="flex gap-1.5 overflow-x-auto pb-2 text-[10px]" id="chat-quick-replies">
+                            <button onclick="sendQuickMessage('Мэндэ! Ямар байнаб?')" class="shrink-0 px-2.5 py-1 rounded-full bg-white border border-beige-300 hover:border-tuman-forest text-beige-900 transition-colors">
+                                💬 «Мэндэ! Ямар байнаб?» (Как дела?)
+                            </button>
+                            <button onclick="sendQuickMessage('Ши хэн бэ?')" class="shrink-0 px-2.5 py-1 rounded-full bg-white border border-beige-300 hover:border-tuman-forest text-beige-900 transition-colors">
+                                💬 «Ши хэн бэ?» (Кто ты?)
+                            </button>
+                        </div>
+
+                        <form id="chat-form" class="flex items-center gap-1.5">
+                            <input type="text" id="chat-input" placeholder="Напишите фразу на бурятском..." class="flex-1 px-3 py-2 rounded-xl bg-white border border-beige-300 text-[11px] text-beige-900 focus:outline-none focus:border-tuman-forest placeholder-beige-700/50">
+                            <button type="submit" class="w-8 h-8 rounded-xl bg-tuman-forest text-white flex items-center justify-center hover:bg-tuman-forest/90 transition-all shrink-0">
+                                <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- СЕКЦИЯ: БУДУЩЕЕ ПРОЕКТА -->
+<section id="future" class="py-20 relative z-10 bg-beige-200/50 border-t border-beige-300/70">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs uppercase tracking-widest font-semibold text-tuman-terracotta bg-tuman-terracotta/10 px-3.5 py-1.5 rounded-full border border-tuman-terracotta/20">
+                    Будущее проекта
+                </span>
+            <h2 class="font-display font-bold text-3xl sm:text-4xl text-beige-900 mt-4">
+                Рассеем туман вместе
+            </h2>
+            <p class="text-beige-700 text-sm sm:text-base mt-2 font-normal">
+                Платформа готова к пилотному запуску со школами, регионами и этнографическими институтами России.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="cream-card p-8 rounded-3xl border border-beige-300 hover:border-tuman-forest/50 transition-all">
+                <div class="w-12 h-12 rounded-2xl bg-tuman-forest/10 text-tuman-forest flex items-center justify-center mb-6">
+                    <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-display font-bold text-xl text-beige-900">Интеграция в школы</h3>
+                <p class="text-sm text-beige-700 mt-3 font-normal leading-relaxed">
+                    Дополнительные модули с умным ИИ-тьютором для региональных школ и уроков родного языка.
+                </p>
+            </div>
+
+            <div class="cream-card p-8 rounded-3xl border border-beige-300 hover:border-tuman-terracotta/50 transition-all">
+                <div class="w-12 h-12 rounded-2xl bg-tuman-terracotta/10 text-tuman-terracotta flex items-center justify-center mb-6">
+                    <i data-lucide="credit-card" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-display font-bold text-xl text-beige-900">Пушкинская карта</h3>
+                <p class="text-sm text-beige-700 mt-3 font-normal leading-relaxed">
+                    Подключение подписки и тематических этно-курсов к государственной программе популяризации культуры.
+                </p>
+            </div>
+
+            <div class="cream-card p-8 rounded-3xl border border-beige-300 hover:border-amber-600/50 transition-all">
+                <div class="w-12 h-12 rounded-2xl bg-amber-600/10 text-amber-700 flex items-center justify-center mb-6">
+                    <i data-lucide="archive" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-display font-bold text-xl text-beige-900">Цифровой этно-архив</h3>
+                <p class="text-sm text-beige-700 mt-3 font-normal leading-relaxed">
+                    Сохранение редких диалектов, сказок, аудиозаписей старейшин и фольклора в облачном хранилище с ИИ-поиском.
+                </p>
+            </div>
+        </div>
+
+        <!-- Форма предзаписи -->
+        <div class="mt-16 max-w-xl mx-auto cream-card p-8 rounded-3xl border border-beige-300 text-center shadow-lg">
+            <h4 class="font-display font-bold text-xl text-beige-900">Присоединиться к пилотному запуску</h4>
+            <p class="text-xs text-beige-700 mt-2 font-normal">Оставьте заявку от школы, исследовательской группы или станьте носителем языка</p>
+
+            <form id="beta-form" class="mt-6 flex flex-col sm:flex-row gap-3">
+                <input type="email" required placeholder="Введите ваш e-mail" class="px-4 py-3 rounded-xl bg-beige-50 border border-beige-300 text-beige-900 placeholder-beige-700/60 text-sm focus:outline-none focus:border-tuman-terracotta flex-1">
+                <button type="submit" class="px-6 py-3 rounded-xl bg-tuman-terracotta text-white font-bold text-sm hover:bg-tuman-terracotta/90 transition-all shadow-md shadow-tuman-terracotta/20">
+                    Подать заявку
+                </button>
+            </form>
+            <div id="form-success" class="text-xs text-tuman-forest font-semibold mt-3 hidden">
+                ✨ Спасибо! Ваша заявка принята в закрытый пилот «ТУМАН».
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="py-12 border-t border-beige-300 relative z-10 text-center text-xs text-beige-700">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex items-center justify-center gap-2 mb-3">
+            <span class="text-lg">🦉</span>
+            <span class="font-display font-bold text-beige-900 tracking-wider text-sm">ТУМАН</span>
+        </div>
+        <p>© 2026 ТУМАН. Образовательная этно-платформа коренных народов России с ИИ-собеседником. Все права защищены.</p>
+    </div>
+</footer>
+
+<!-- JS СКРИПТЫ -->
+<script>
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+
+    /* 1. ЗВУКОВОЙ КОНТЕКСТ */
+    let audioCtx = null;
+    function getSafeAudioContext() {
+        if (!audioCtx) {
+            const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtxClass) audioCtx = new AudioCtxClass();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        return audioCtx;
+    }
+
+    const unlockAudio = () => {
+        getSafeAudioContext();
+        window.removeEventListener('click', unlockAudio);
+        window.removeEventListener('touchstart', unlockAudio);
+    };
+    window.addEventListener('click', unlockAudio);
+    window.addEventListener('touchstart', unlockAudio);
+
+    function playAudioSimulation(name) {
+        try {
+            const ctx = getSafeAudioContext();
+            if (!ctx) return;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(440, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.25);
+            gain.gain.setValueAtTime(0.12, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.3);
+        } catch (e) {
+            console.warn('Audio synthesis warning:', e);
+        }
+    }
+
+    /* 2. БАЗА МАСКОТОВ */
+    const mascotsData = [
+        {
+            name: "Тулпар",
+            region: "Башкортостан",
+            title: "Крылатый конь",
+            nativeGreeting: "Сәләм! Мин — Тулпар.",
+            tumanGreeting: "Привет! Мин Туман.",
+            emoji: "🐎",
+            image: "тулпарвизитка.jpg",
+            flagGradient: "linear-gradient(180deg, #0080c8 33.3%, #ffffff 33.3%, #ffffff 66.6%, #009944 66.6%)",
+            borderColor: "hover:border-sky-500"
+        },
+        {
+            name: "Ак Барс (Барсик)",
+            region: "Татарстан",
+            title: "Белый барс",
+            nativeGreeting: "Исәнмесез! Мин — Ак Барс.",
+            tumanGreeting: "Привет! Мин Туман.",
+            emoji: "🐆",
+            image: "акбарсвизитка.jpg",
+            flagGradient: "linear-gradient(180deg, #009944 45%, #ffffff 45%, #ffffff 55%, #e30613 55%)",
+            borderColor: "hover:border-emerald-600"
+        },
+        {
+            name: "Амархан",
+            region: "Бурятия",
+            title: "Байкальская нерпа",
+            nativeGreeting: "Мэндэ! Бии Амархан.",
+            tumanGreeting: "Мэндэ, Амархан!",
+            emoji: "🦭",
+            image: "амарханвизитка.jpg",
+            flagGradient: "linear-gradient(180deg, #0055a5 50%, #ffffff 50%, #ffffff 75%, #ffcc00 75%)",
+            borderColor: "hover:border-amber-500"
+        },
+        {
+            name: "Тури",
+            region: "Чувашия",
+            title: "Приволжский волк (Тури кашкӑрӗ)",
+            nativeGreeting: "Салам! Эпӗ — Тури кашкӑрӗ.",
+            tumanGreeting: "Салам, Тури!",
+            emoji: "🐺",
+            image: "туривизитка.jpg",
+            flagGradient: "linear-gradient(180deg, #ffde00 60%, #990033 60%)",
+            borderColor: "hover:border-amber-600"
+        },
+        {
+            name: "Ошто",
+            region: "Вепсский край (Карелия)",
+            title: "Лесной медведь",
+            nativeGreeting: "Tervhen! Mä olen Ošto.",
+            tumanGreeting: "Tervhen! Mä olen Tuman.",
+            emoji: "🐻",
+            image: "оштовизитка.jpg",
+            flagGradient: "linear-gradient(180deg, #2b7a3e 33.3%, #225ea8 33.3%, #225ea8 66.6%, #f3c21c 66.6%)",
+            borderColor: "hover:border-emerald-700"
+        },
+        {
+            name: "Беркут",
+            region: "Чеченская Республика",
+            title: "Горный Орёл",
+            nativeGreeting: "Марша догIийла! Со Беркут ву.",
+            tumanGreeting: "Марша, Беркут!",
+            emoji: "🦅",
+            image: "беркутвизитка.jpg",
+            flagGradient: "linear-gradient(180deg, #009944 55%, #ffffff 55%, #ffffff 62%, #da251d 62%, #da251d 72%, #ffffff 72%, #ffffff 79%, #da251d 79%)",
+            borderColor: "hover:border-tuman-forest"
+        }
+    ];
+
+    const mascotsGrid = document.getElementById('mascots-grid');
+    if (mascotsGrid) {
+        mascotsGrid.innerHTML = '';
+        mascotsData.forEach((m) => {
+            const card = document.createElement('div');
+            card.className = `cream-card rounded-3xl p-5 border border-beige-300 ${m.borderColor} transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer flex flex-col justify-between relative overflow-hidden group`;
+
+            card.innerHTML = `
+                    <div class="absolute top-0 right-0 w-24 h-1.5 opacity-80 rounded-bl-full"
+                         style="background: ${m.flagGradient};"></div>
+
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-beige-200/80 border border-beige-300 text-beige-900">
+                                <span class="w-3.5 h-2.5 rounded-[2px] shadow-sm inline-block shrink-0" style="background: ${m.flagGradient};"></span>
+                                ${m.region}
+                            </span>
+                            <span class="text-xs text-tuman-forest font-semibold">${m.title}</span>
+                        </div>
+
+                        <div class="w-full aspect-[16/9] rounded-2xl overflow-hidden mb-4 border border-beige-300 bg-beige-200 shadow-sm">
+                            <img src="${m.image}" alt="${m.name}" onerror="this.outerHTML='<div class=\\'w-full h-full flex items-center justify-center text-4xl\\'>${m.emoji}</div>'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+
+                        <h3 class="font-display font-bold text-xl text-beige-900 group-hover:text-tuman-terracotta transition-colors">${m.name}</h3>
+
+                        <div class="mt-4 p-3.5 rounded-2xl bg-beige-100 border border-beige-300/80 space-y-1.5">
+                            <div class="text-[10px] text-beige-700 font-mono uppercase tracking-wider font-semibold">Речь хранителя:</div>
+                            <div class="text-sm font-bold text-beige-900 tracking-wide">«${m.nativeGreeting}»</div>
+                            <div class="text-xs text-beige-700 pt-1.5 border-t border-beige-200 flex items-center gap-1.5">
+                                <span>🦉 Туман:</span>
+                                <span class="italic text-tuman-forest font-semibold">«${m.tumanGreeting}»</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 mt-5 pt-3.5 border-t border-beige-200 flex items-center justify-between">
+                        <button type="button" class="text-xs font-bold text-tuman-forest flex items-center gap-1.5 hover:underline" onclick="playAudioSimulation('${m.name}')">
+                            <i data-lucide="volume-2" class="w-4 h-4"></i> Прослушать фразу
+                        </button>
+                        <span class="text-[10px] text-beige-700 font-medium">Аутентично</span>
+                    </div>
+                `;
+            mascotsGrid.appendChild(card);
+        });
+        if (window.lucide) lucide.createIcons();
+    }
+
+    /* 3. ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК */
+    const tabBtnLesson = document.getElementById('tab-btn-lesson');
+    const tabBtnAi = document.getElementById('tab-btn-ai');
+    const viewLesson = document.getElementById('view-lesson');
+    const viewAi = document.getElementById('view-ai');
+
+    if (tabBtnLesson && tabBtnAi) {
+        tabBtnLesson.addEventListener('click', () => {
+            tabBtnLesson.classList.add('bg-white', 'text-beige-900', 'shadow-sm');
+            tabBtnLesson.classList.remove('text-beige-700');
+            tabBtnAi.classList.remove('bg-white', 'text-beige-900', 'shadow-sm');
+            tabBtnAi.classList.add('text-beige-700');
+            viewLesson.classList.remove('hidden');
+            viewAi.classList.add('hidden');
+        });
+
+        tabBtnAi.addEventListener('click', () => {
+            tabBtnAi.classList.add('bg-white', 'text-beige-900', 'shadow-sm');
+            tabBtnAi.classList.remove('text-beige-700');
+            tabBtnLesson.classList.remove('bg-white', 'text-beige-900', 'shadow-sm');
+            tabBtnLesson.classList.add('text-beige-700');
+            viewAi.classList.remove('hidden');
+            viewLesson.classList.add('hidden');
+            if (window.lucide) lucide.createIcons();
+        });
+    }
+
+    /* 4. СИМУЛЯТОР УРОКА */
+    const quizData = [
+        { id: 1, text: "Мэндэ, Амархан!", translation: "Привет, Амархан! (бурятский)", isCorrect: true },
+        { id: 2, text: "Сәләм, Тулпар!", translation: "Привет, Тулпар! (башкирский)", isCorrect: false },
+        { id: 3, text: "Исәнмесез, Ак Барс!", translation: "Здравствуйте, Ак Барс! (татарский)", isCorrect: false },
+        { id: 4, text: "Tervhen, Ošto!", translation: "Здравствуй, Ошто! (вепсский)", isCorrect: false }
+    ];
+
+    let selectedOption = null;
+    const optionsContainer = document.getElementById('quiz-options');
+    const checkBtn = document.getElementById('quiz-check-btn');
+    const feedback = document.getElementById('quiz-feedback');
+    const progressBar = document.getElementById('lesson-progress');
+
+    if (optionsContainer && checkBtn) {
+        quizData.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = "p-2.5 rounded-2xl bg-white border border-beige-300 hover:border-tuman-forest flex flex-col items-start gap-0.5 transition-all cursor-pointer text-left group active:scale-[0.98] shadow-sm";
+            btn.innerHTML = `
+                    <span class="text-xs font-bold text-beige-900 group-hover:text-tuman-forest transition-colors">${opt.text}</span>
+                    <span class="text-[10px] text-beige-700 font-normal">${opt.translation}</span>
+                `;
+            btn.onclick = () => {
+                Array.from(optionsContainer.children).forEach(c => c.classList.remove('border-tuman-forest', 'bg-emerald-50'));
+                btn.classList.add('border-tuman-forest', 'bg-emerald-50');
+                selectedOption = opt;
+                checkBtn.disabled = false;
+                checkBtn.classList.remove('bg-beige-300', 'text-beige-700');
+                checkBtn.classList.add('bg-tuman-forest', 'text-white', 'hover:bg-tuman-forest/90');
+            };
+            optionsContainer.appendChild(btn);
+        });
+
+        checkBtn.onclick = () => {
+            if (!selectedOption) return;
+            feedback.classList.remove('hidden', 'bg-rose-100', 'text-rose-800', 'border-rose-200', 'bg-emerald-100', 'text-emerald-900', 'border-emerald-200');
+            feedback.classList.add('border');
+
+            if (selectedOption.isCorrect) {
+                feedback.classList.add('bg-emerald-100', 'text-emerald-900', 'border-emerald-200');
+                feedback.innerHTML = '✓ <b>Верно!</b> «Мэндэ, Амархан!» — правильный ответ на бурятском языке.';
+                if (progressBar) progressBar.style.width = '100%';
+            } else {
+                feedback.classList.add('bg-rose-100', 'text-rose-800', 'border-rose-200');
+                feedback.innerHTML = 'Это приветствие из другого региона. На бурятском верно ответить: «Мэндэ, Амархан!».';
+            }
+        };
+    }
+
+    /* 5. ЧАТ С ИИ-ТУМАНОМ */
+    const chatMessages = document.getElementById('chat-messages');
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+
+    function appendMessage(text, isUser = false) {
+        const row = document.createElement('div');
+        row.className = isUser ? 'flex items-start justify-end gap-2' : 'flex items-start gap-2';
+
+        if (isUser) {
+            row.innerHTML = `
+                    <div class="p-2.5 rounded-2xl rounded-tr-sm bg-tuman-forest text-white text-[11px] shadow-sm leading-relaxed max-w-[85%]">
+                        ${text}
+                    </div>
+                `;
+        } else {
+            row.innerHTML = `
+                    <div class="w-6 h-6 rounded-full overflow-hidden shrink-0 mt-0.5 border border-beige-300">
+                        <img src="туманвизитка.jpg" alt="Туман" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-2.5 rounded-2xl rounded-tl-sm bg-white border border-beige-300 text-[11px] text-beige-900 shadow-sm leading-relaxed max-w-[85%]">
+                        ${text}
+                    </div>
+                `;
+        }
+        chatMessages.appendChild(row);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function handleBotReply(userText) {
+        setTimeout(() => {
+            const lower = userText.toLowerCase();
+            let reply = "Сайн байна! Я бережно сохраняю диалоги и помогаю оттачивать бурятскую речь шаг за шагом.";
+            if (lower.includes('ямар байнаб') || lower.includes('дела')) {
+                reply = "Һайн даа! (Всё хорошо!) А у тебя как успехи в изучении родного языка?";
+            } else if (lower.includes('хэн') || lower.includes('кто ты')) {
+                reply = "Би Туман шубуун байнаб! Я Совёнок Туман — твой проводник и ИИ-собеседник в приложении.";
+            } else if (lower.includes('мэндэ') || lower.includes('привет')) {
+                reply = "Мэндэ амар! Очень рад слышать бурятскую речь. О чём поговорим дальше?";
+            }
+            appendMessage(reply, false);
+        }, 600);
+    }
+
+    function sendQuickMessage(text) {
+        appendMessage(text, true);
+        handleBotReply(text);
+    }
+
+    if (chatForm && chatInput) {
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const val = chatInput.value.trim();
+            if (!val) return;
+            appendMessage(val, true);
+            chatInput.value = '';
+            handleBotReply(val);
+        });
+    }
+
+    /* 6. ФОРМА ПРЕДЗАПИСИ */
+    const betaForm = document.getElementById('beta-form');
+    if (betaForm) {
+        betaForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const successMsg = document.getElementById('form-success');
+            if (successMsg) successMsg.classList.remove('hidden');
+            betaForm.reset();
+        });
+    }
+
+    /* 7. ПАДАЮЩИЕ ЛИСТОЧКИ НА CANVAS */
+    const leavesCanvas = document.getElementById('leaves-canvas');
+    const lCtx = leavesCanvas ? leavesCanvas.getContext('2d') : null;
+    let leaves = [];
+
+    function resizeLeaves() {
+        if (!leavesCanvas) return;
+        leavesCanvas.width = window.innerWidth;
+        leavesCanvas.height = window.innerHeight;
+    }
+
+    const leafColors = [
+        'rgba(217, 83, 56, 0.45)',
+        'rgba(202, 138, 4, 0.40)',
+        'rgba(180, 83, 9, 0.40)',
+        'rgba(45, 90, 70, 0.35)',
+        'rgba(146, 64, 14, 0.35)'
+    ];
+
+    class Leaf {
+        constructor(initRandomY = true) {
+            this.reset(initRandomY);
+        }
+        reset(initRandomY = false) {
+            if (!leavesCanvas) return;
+            this.x = Math.random() * leavesCanvas.width;
+            this.y = initRandomY ? Math.random() * leavesCanvas.height : -30;
+            this.size = Math.random() * 12 + 10;
+            this.speedY = Math.random() * 0.7 + 0.5;
+            this.speedX = Math.random() * 0.5 - 0.25;
+            this.angle = Math.random() * Math.PI * 2;
+            this.rotationSpeed = (Math.random() - 0.5) * 0.02;
+            this.color = leafColors[Math.floor(Math.random() * leafColors.length)];
+            this.sway = Math.random() * 2;
+            this.swaySpeed = Math.random() * 0.02 + 0.01;
+        }
+        update() {
+            this.y += this.speedY;
+            this.sway += this.swaySpeed;
+            this.x += Math.sin(this.sway) * 0.6 + this.speedX;
+            this.angle += this.rotationSpeed;
+
+            if (leavesCanvas && (this.y > leavesCanvas.height + 40 || this.x < -40 || this.x > leavesCanvas.width + 40)) {
+                this.reset(false);
+            }
+        }
+        draw() {
+            if (!lCtx) return;
+            lCtx.save();
+            lCtx.translate(this.x, this.y);
+            lCtx.rotate(this.angle);
+
+            lCtx.fillStyle = this.color;
+            lCtx.beginPath();
+            lCtx.moveTo(0, -this.size);
+            lCtx.bezierCurveTo(this.size * 0.8, -this.size * 0.4, this.size * 0.8, this.size * 0.6, 0, this.size);
+            lCtx.bezierCurveTo(-this.size * 0.8, this.size * 0.6, -this.size * 0.8, -this.size * 0.4, 0, -this.size);
+            lCtx.fill();
+
+            lCtx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+            lCtx.lineWidth = 1;
+            lCtx.beginPath();
+            lCtx.moveTo(0, -this.size * 0.7);
+            lCtx.lineTo(0, this.size * 0.8);
+            lCtx.stroke();
+
+            lCtx.restore();
+        }
+    }
+
+    function animLeaves() {
+        if (lCtx && leavesCanvas) {
+            lCtx.clearRect(0, 0, leavesCanvas.width, leavesCanvas.height);
+            leaves.forEach(leaf => {
+                leaf.update();
+                leaf.draw();
+            });
+        }
+        requestAnimationFrame(animLeaves);
+    }
+
+    window.addEventListener('resize', resizeLeaves);
+
+    window.addEventListener('DOMContentLoaded', () => {
+        resizeLeaves();
+        leaves = [];
+        for (let i = 0; i < 30; i++) {
+            leaves.push(new Leaf(true));
+        }
+        animLeaves();
+    });
+</script>
+</body>
+</html>
